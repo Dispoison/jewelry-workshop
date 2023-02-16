@@ -1,0 +1,152 @@
+{
+  "jewelry_types": [
+    {
+      "name": "Каблучки"
+    },
+    {
+      "name": "Сережки"
+    },
+    {
+      "name": "Браслети"
+    },
+    {
+      "name": "Брошки"
+    }
+  ],
+  "materials": [
+    {
+      "name": "Платина"
+    },
+    {
+      "name": "Золото"
+    },
+    {
+      "name": "Срібло"
+    }
+  ],
+  "gems": [
+    {
+      "name": "Діамант"
+    },
+    {
+      "name": "Ізумруд"
+    },
+    {
+      "name": "Рубін"
+    },
+    {
+      "name": "Сапфір"
+    }
+  ],
+  "jewelries": [
+    {
+      "name": "Золота каблучка з діамантом",
+      "weight": 7.05,
+      "price": 15000,
+      "type_id": 1
+    },
+    {
+      "name": "Срібні сережки з ізумрудами",
+      "weight": 2.55,
+      "price": 7500,
+      "type_id": 2
+    },
+    {
+      "name": "Електрумовий браслет з діамантом, ізумрудом, сапфіром та рубіном",
+      "weight": 10.32,
+      "price": 99999,
+      "type_id": 3
+    },
+    {
+      "name": "Платинова брошка з рубіном та сапфіром",
+      "weight": 7.05,
+      "price": 32000,
+      "type_id": 4
+    }
+  ],
+  "jewelries_materials": [
+    {
+      "jewelry_id": 1,
+      "material_id": 2
+    },
+    {
+      "jewelry_id": 2,
+      "material_id": 3
+    },
+    {
+      "jewelry_id": 3,
+      "material_id": 2
+    },
+    {
+      "jewelry_id": 3,
+      "material_id": 3
+    },
+    {
+      "jewelry_id": 4,
+      "material_id": 1
+    }
+  ],
+  "jewelries_gems": [
+    {
+      "jewelry_id": 1,
+      "gem_id": 1
+    },
+    {
+      "jewelry_id": 2,
+      "gem_id": 2
+    },
+    {
+      "jewelry_id": 3,
+      "gem_id": 1
+    },
+    {
+      "jewelry_id": 3,
+      "gem_id": 2
+    },
+    {
+      "jewelry_id": 3,
+      "gem_id": 3
+    },
+    {
+      "jewelry_id": 3,
+      "gem_id": 4
+    },
+    {
+      "jewelry_id": 4,
+      "gem_id": 3
+    },
+    {
+      "jewelry_id": 4,
+      "gem_id": 4
+    }
+  ],
+  "clients": [
+    {
+      "name": "Vitalii Maliarenko",
+      "phone_number": "+380123456789",
+      "email": "vitalii.maliarenko@example.com"
+    }
+  ],
+  "orders": [
+    {
+      "client_id": 1,
+      "jewelry_id": 1,
+      "quantity": 2
+    },
+    {
+      "client_id": 1,
+      "jewelry_id": 2,
+      "quantity": 5
+    },
+    {
+      "client_id": 1,
+      "jewelry_id": 3,
+      "quantity": 1
+    },
+    {
+      "client_id": 1,
+      "jewelry_id": 4,
+      "quantity": 2
+    }
+  ]
+}
