@@ -2,11 +2,19 @@
 
 To prepare the project run the following commands:
 ```
+python -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+cp .env.development.example .env
+
 python manage.py makemigrations
 python manage.py migrate
 python manage.py create_admin
 python manage.py db_init
 ```
+
 
 To run the project run the following commands:
 ```

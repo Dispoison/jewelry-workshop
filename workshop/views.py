@@ -3,4 +3,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse('<h1>Django Include URLs</h1>')
+    return HttpResponse('<h1>Jewelry Workshop</h1>')
