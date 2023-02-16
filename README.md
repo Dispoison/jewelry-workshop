@@ -13,6 +13,7 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py create_admin
 python manage.py db_init
+python manage.py collectstatic
 ```
 
 
