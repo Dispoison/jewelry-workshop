@@ -40,6 +40,7 @@ class Jewelry(BaseTimestampedModel):
     type = models.ForeignKey(JewelryType, null=True, on_delete=models.SET_NULL)
     materials = models.ManyToManyField(Material)
     gems = models.ManyToManyField(Gem)
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', null=True, verbose_name='Зображення')
 
     def __str__(self):
         return self.name
