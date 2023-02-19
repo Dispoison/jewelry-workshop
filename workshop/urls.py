@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views
+from workshop.views import MainPageView, JewelryTypeView, JewelryView
 
 urlpatterns = [
-    path('', views.index, name='home')
+    path("", MainPageView.as_view(), name="home"),
+    path("category/<slug:slug>/", JewelryTypeView.as_view(), name="category"),
+    path("jewelry/<slug:slug>/", JewelryView.as_view(), name="jewelry"),
 ]

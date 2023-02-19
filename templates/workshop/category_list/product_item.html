@@ -1,0 +1,13 @@
+{% load tags %}
+
+<div class="goods__item">
+    <div class="goods__image">
+        <a href="{{ jewelry.get_absolute_url }}">
+            <img src="{{ jewelry.photo.url }}" alt="{{ jewelry.name }}">
+        </a>
+    </div>
+    <a href="{{ jewelry.get_absolute_url }}">
+        <div class="goods__name">{{ jewelry.name }}</div>
+        <div class="goods__price">{{ jewelry.price | currency }}<span> грн.</span></div>
+    </a>
+</div>

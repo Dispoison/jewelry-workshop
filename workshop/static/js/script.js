@@ -19,3 +19,25 @@ function checkViewport() {
 }
 
 window.addEventListener('scroll', checkViewport);
+
+const details = document.querySelector('.item-details__details');
+const wrapper = document.querySelector('.item-details__wrapper');
+
+details.addEventListener('click', () => {
+  
+  let containsUnactive = wrapper.classList.contains('item-details__wrapper_unactive');
+  let containsActive = wrapper.classList.contains('item-details__wrapper_active');
+
+  if(containsUnactive || (!containsUnactive && !containsActive)){
+    wrapper.classList.remove('item-details__wrapper_unactive');
+    wrapper.classList.add('item-details__wrapper_active');
+  }
+  else if(containsActive){
+    wrapper.classList.remove('item-details__wrapper_active');
+    wrapper.classList.add('item-details__wrapper_unactive');
+  }
+  else{
+    alert(1);
+  }
+  details.classList.toggle('item-details__details_active');
+});

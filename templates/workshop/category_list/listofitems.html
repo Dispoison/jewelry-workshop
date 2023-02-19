@@ -1,0 +1,14 @@
+{% extends "workshop/base/base.html" %}
+
+{% block content %}
+    <section class="goods">
+        <div class="container"><h2 class="goods__title">{{ jewelry_type.name }}</h2>
+            <hr class="goods__underline">
+            <div class="goods__container">
+                {% for jewelry in jewelries %}
+                    {% include "workshop/category_list/product_item.html" %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock content %}

@@ -1,8 +1,11 @@
 from core.settings.base import *
 
-if env("ENVIRONMENT") == "production":
+environment = env("ENVIRONMENT")
+
+if environment == PRODUCTION_ENVIRONMENT:
     from core.settings.production import *
-elif env("ENVIRONMENT") == "development":
+elif environment == DEVELOPMENT_ENVIRONMENT:
     from core.settings.development import *
 else:
-    raise ValueError("Environment variable 'ENVIRONMENT' must be equal 'development' or 'production'")
+    raise ValueError(f"Environment variable 'ENVIRONMENT' must be equal "
+                     f"'{DEVELOPMENT_ENVIRONMENT}' or '{PRODUCTION_ENVIRONMENT}'")

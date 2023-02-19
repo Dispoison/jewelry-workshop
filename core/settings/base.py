@@ -13,6 +13,11 @@ import os
 import environ
 from pathlib import Path
 
+PRODUCTION_ENVIRONMENT = "production"
+DEVELOPMENT_ENVIRONMENT = "development"
+
+WEBSITE_TITLE = "Hexada Jewelry"
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -53,8 +58,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

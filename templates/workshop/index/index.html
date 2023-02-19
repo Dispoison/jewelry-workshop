@@ -1,0 +1,24 @@
+{% extends "workshop/base/base.html" %}
+{% load static %}
+{% load tags %}
+
+{% block content %}
+    <section class="promo">
+       <div class="container">
+          <h1 class="promo__title">Неймовірні ювелірні вироби</h1>
+          <div class="promo__subtitle">Настає весна.<br>Купуйте наші нові випуски, починаючи з сьогоднішнього дня.</div>
+          <a class="promo__button" href="#">Придбати</a>
+       </div>
+    </section>
+    <section class="categories">
+       <div class="container">
+          <h2 class="categories__title animate">Купуйте за категоріями</h2>
+          <div class="categories__subtitle animate">Насолоджуйтесь тим, що ми пропонуємо.</div>
+          <div class="categories__container">
+            {% for category_item in jewelry_types %}
+                {% include "workshop/index/category_item.html" %}
+            {% endfor %}
+          </div>
+       </div>
+    </section>
+{% endblock content %}

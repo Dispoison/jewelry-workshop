@@ -1,0 +1,35 @@
+{% extends "workshop/base/base.html" %}
+{% load tags %}
+
+{% block content %}
+<section class="item-details">
+    <div class="item-details__photo"><img src="{{ jewelry.photo.url }}" alt="{{ jewelry.name }}"></div>
+    <div class="item-details__body">
+        <div class="item-details__back"><a href="{{ jewelry_type.get_absolute_url }}">повернутися до вибору</a></div>
+        <p class="item-details__title">{{ jewelry.name }}</p>
+        <p class="item-details__price">{{ jewelry.price | currency }}<span> грн.</span></p>
+        {% if jewelry.description %}
+            <p class="item-details__text">{{ jewelry.description }}<br></p>
+        {% endif %}
+        <button class="item-details__btn">Додати до кошика</button>
+        <div class="item-details__details">деталі</div>
+        <div class="item-details__wrapper">
+            <div>Тип прикраси: <span>{{ jewelry_type.name | lower }}</span></div>
+            <div>Матеріали: <span>
+                {% for material in jewelry.materials.all %}
+                    {{ material.name | lower }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </span></div>
+            {% if jewelry.gems.all %}
+                <div>Дорогоцінні камені: <span>
+                    {% for gem in jewelry.gems.all %}
+                        {% filter lower %}{{ gem.name }}{% endfilter %}{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                    </span>
+                </div>
+            {% endif %}
+            <div>Вага: <span>{{ jewelry.weight }} г.</span></div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
