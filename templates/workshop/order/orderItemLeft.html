@@ -1,0 +1,20 @@
+{% load static %}
+
+<div data-id="{{ item.id }}" class="order-view__left left-item">
+    <a href="{{ item.href }}"><div class="left-item__image"><img src="{{ item.img_url }}" alt="{{ item.name }}"></div></a>
+    <div class="left-item__body">
+        <div class="left-item__wrapper">
+            <a href="{{ item.href }}"><div class="left-item__name">{{ item.name }}</div></a>
+            <div class="left-item__price-trash">
+                <div class="left-item__price">{{ item.price|floatformat:0 }} <span>грн.</span></div>
+                <div class="left-item__trash"><img src="{% static "icons/ph_trash-light.svg" %}" alt="Видалити">
+                </div>
+            </div>
+        </div>
+        <div class="left-item__quantity">Кількість: <span>{{ item.quantity }}</span></div>
+        <div class="left-item__btns">
+            <div class="left-item__minus">-</div>
+            <div class="left-item__plus">+</div>
+        </div>
+    </div>
+</div>

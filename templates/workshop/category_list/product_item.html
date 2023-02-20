@@ -1,5 +1,3 @@
-{% load tags %}
-
 <div class="goods__item">
     <div class="goods__image">
         <a href="{{ jewelry.get_absolute_url }}">
@@ -8,6 +6,6 @@
     </div>
     <a href="{{ jewelry.get_absolute_url }}">
         <div class="goods__name">{{ jewelry.name }}</div>
-        <div class="goods__price">{{ jewelry.price | currency }}<span> грн.</span></div>
+        <div class="goods__price">{{ jewelry.price|floatformat:0 }}<span> грн.</span></div>
     </a>
 </div>

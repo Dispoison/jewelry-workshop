@@ -1,0 +1,47 @@
+{% extends "workshop/base/base.html" %}
+{% load static %}
+{% load tags %}
+
+{% block content %}
+<section class="order-view">
+    <div class="container"><h2 class="order-view__title">Огляд замовлення</h2>
+        <div class="order-view__container">
+            <div class="order-view__lwrap">
+                {% for item in items %}
+                    {% include "workshop/order/orderItemLeft.html" %}
+                {% endfor %}
+            </div>
+            <div class="order-view__right right-item">
+                <div class="right-item__wrapper">
+                    <div class="right-item__title">Усього</div>
+                    <div class="right-item__divider"></div>
+                    <div class="right-item__order-container">
+                    {% for item in items %}
+                        {% include "workshop/order/orderItemRight.html" %}
+                    {% endfor %}
+                    </div>
+                    <div class="right-item__subtotal">Усього:
+                        <div><span>{{ total_price|floatformat:0 }}</span> <span>грн.</span></div>
+                    </div>
+                    <div class="right-item__edit">Редагувати</div>
+                    <div class="right-item__save" data-url="{% url 'cart_edit' %}">Зберегти</div>
+                    <button type="submit" form="order-form" class="right-item__btn" data-url="{% url 'order_create' %}">Замовити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="order">
+    <div class="container">
+        <div class="order__title">Ваша персональна інформація</div>
+        <div class="order__divider"></div>
+        <form class="order__form" id="order-form" onsubmit="orderButtonSubmitted();return false"><input name="name" required
+                                                         placeholder="Введіть ім'я та прізвище"> <input
+                name="email" type="email" required placeholder="Введіть електронну пошту"> <input name="phone"
+                                                                                                  type="number"
+                                                                                                  required
+                                                                                                  placeholder="Введіть номер телефону">
+        </form>
+    </div>
+</section>
+{% endblock content %}

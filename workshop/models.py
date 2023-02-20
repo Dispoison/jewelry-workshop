@@ -64,17 +64,27 @@ class Jewelry(BaseTimestampedModel, SlugableModel):
 
 class Client(BaseTimestampedModel):
     name = models.CharField(max_length=128)
-    phone_number = models.CharField(max_length=16)
+    phone_number = models.CharField(max_length=16, unique=True)
     email = models.EmailField()
 
     def __str__(self):
-        return f"Name: {self.name}. Email: {self.email}"
+        return f"Name: {self.name}. Phone: {self.phone_number}. Email: {self.email}"
 
 
 class Order(BaseTimestampedModel):
-    quantity = models.IntegerField()
-    jewelry = models.ForeignKey(Jewelry, null=True, on_delete=models.SET_NULL)
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)
+    items = models.ManyToManyField(Jewelry, through='OrderItem')
 
     def __str__(self):
-        return f"Order: {self.id}. Product name: {self.jewelry.name}. Quantity: {self.quantity}"
+        str_value = f"Order: {self.id}. "
+        if self.client:
+            str_value += f"Client name: {self.client.name}. Client phone: {self.client.phone_number}"
+        else:
+            str_value += "Client: [CLIENT DELETED]"
+        return str_value
+
+
+class OrderItem(models.Model):
+    jewelry = models.ForeignKey(Jewelry, null=True, on_delete=models.SET_NULL)
+    order = models.ForeignKey(Order, null=True, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
