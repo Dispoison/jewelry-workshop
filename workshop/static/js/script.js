@@ -205,11 +205,14 @@ function sendPostRequest(data, url){
     body: JSON.stringify(data)
   })
   .then(response => {
-    if (response.redirected) {
-        window.alert('Замовлення успішно створене');
-        window.location.href = response.url;
+    if (response.ok) {
+      if (response.redirected) {
+          window.alert('Замовлення успішно створене');
+          window.location.replace(response.url)
+      }
+      return response.json()
     }
-    return response.json()
+      return Promise.reject(response);
   })
   .then(data => {
     if ("cart_items_quantity" in data){
@@ -298,4 +301,8 @@ function orderButtonSubmitted() {
 
   let url = orderBtn.getAttribute('data-url')
   sendPostRequest(data, url)
+}
+
+function scrollToCategories() {
+  document.querySelector('section.categories').scrollIntoView();
 }

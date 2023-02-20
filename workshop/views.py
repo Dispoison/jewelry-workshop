@@ -1,7 +1,7 @@
 import json
 
 from django.db.transaction import atomic
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView
 
@@ -70,7 +70,9 @@ class OrderView(ViewDataMixin, TemplateView):
         base_context = super().get_context_data(**kwargs)
         cart = GuestCart(self.request)
         order_data = cart.get_order_data()
-        mixin_context = self.get_mixin_context(items=order_data["items"], total_price=order_data["total_price"])
+        items_quantity = cart.get_items_quantity()
+        mixin_context = self.get_mixin_context(items=order_data["items"], total_price=order_data["total_price"],
+                                               cart_items_quantity=items_quantity)
         return base_context | mixin_context
 
 
@@ -122,6 +124,8 @@ def post_make_order(request):
         serializer = OrderInfoSerializer(data=body_data)
         if serializer.is_valid():
             validated_data = serializer.validated_data
+            if len(validated_data["cart"]) == 0:
+                return HttpResponseBadRequest("You cannot make order without items", status=400)
             client, created = Client.objects.update_or_create(phone_number=validated_data["client"]["phone_number"],
                                                               defaults=validated_data["client"])
 
@@ -135,8 +139,5 @@ def post_make_order(request):
 
             cart = GuestCart(request)
             cart.remove_all()
-            items_quantity = cart.get_items_quantity()
-            response_content = json.dumps({"cart_items_quantity": items_quantity})
-            # return HttpResponse(response_content, status=200)
             return redirect("home")
     return HttpResponse(status=400)

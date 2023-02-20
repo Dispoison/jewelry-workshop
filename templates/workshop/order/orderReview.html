@@ -3,6 +3,7 @@
 {% load tags %}
 
 {% block content %}
+{% if cart_items_quantity > 0 %}
 <section class="order-view">
     <div class="container"><h2 class="order-view__title">Огляд замовлення</h2>
         <div class="order-view__container">
@@ -44,4 +45,11 @@
         </form>
     </div>
 </section>
+{% else %}
+    <section class="goods">
+    <div class="container"><h2 class="goods__title">Кошик порожній...</h2>
+
+    </div>
+</section>
+{% endif %}
 {% endblock content %}
