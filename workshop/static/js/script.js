@@ -212,6 +212,7 @@ function sendPostRequest(data, url){
       }
       return response.json()
     }
+      window.alert('Помилка відправки запиту');
       return Promise.reject(response);
   })
   .then(data => {
