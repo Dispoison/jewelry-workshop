@@ -196,15 +196,16 @@ saveBtn && saveBtn.addEventListener('click', () => {
   });
 
   const url = document.querySelector('.right-item__save').getAttribute('data-url');
-  sendPostRequestSave(orderData, url);
+  const csrf = document.querySelector('.right-item__save').getAttribute('data-csrftoken');
+  sendPostRequestSave(orderData, url, csrf);
 });
 
-function sendPostRequestSave(data, url){
+function sendPostRequestSave(data, url, csrf){
   fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken
+      'X-CSRFToken': csrf
     },
     body: JSON.stringify(data)
   })
@@ -227,12 +228,12 @@ function sendPostRequestSave(data, url){
   .catch(error => console.error(error));
 }
 
-function sendPostRequestAdd(data, url){
+function sendPostRequestAdd(data, url, csrf){
   fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken
+      'X-CSRFToken': csrf
     },
     body: JSON.stringify(data)
   })
@@ -262,12 +263,12 @@ function sendPostRequestAdd(data, url){
   .catch(error => console.error(error));
 }
 
-function sendPostRequestOrderSubmit(data, url){
+function sendPostRequestOrderSubmit(data, url, csrf){
   fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken
+      'X-CSRFToken': csrf
     },
     body: JSON.stringify(data)
   })
@@ -298,6 +299,7 @@ addBtn && addBtn.addEventListener('click', () => {
   setTimeout(() => {bagIcon.classList.remove('header__bag_animate')}, 500);
 
   // Swap 'add to cart' button to 'remove from cart'
+  let csrf = addBtn.getAttribute('data-csrftoken');
   let itemId = addBtn.getAttribute('data-id');
   let cartItemAddUrl = addBtn.getAttribute('data-cart-add-url');
   let cartItemRemoveUrl = addBtn.getAttribute('data-cart-remove-url');
@@ -309,7 +311,7 @@ addBtn && addBtn.addEventListener('click', () => {
   else if (addBtn.classList.contains('item-details__btn__remove')){
     requestUrl = cartItemRemoveUrl
   }
-  sendPostRequestAdd(data, requestUrl)
+  sendPostRequestAdd(data, requestUrl, csrf)
 });
 
 
@@ -356,7 +358,8 @@ function orderButtonSubmitted() {
   data['client']['email'] = clientEmail.value
 
   let url = orderBtn.getAttribute('data-url')
-  sendPostRequestOrderSubmit(data, url)
+  let csrf = orderBtn.getAttribute('data-csrftoken')
+  sendPostRequestOrderSubmit(data, url, csrf)
 }
 
 function scrollToCategories() {

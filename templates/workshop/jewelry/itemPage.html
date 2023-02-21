@@ -11,7 +11,7 @@
         {% if jewelry.description %}
             <p class="item-details__text">{{ jewelry.description }}<br></p>
         {% endif %}
-        <button class="item-details__btn {% if item_in_cart %}item-details__btn__remove{% else %}item-details__btn__add{% endif %}" data-id="{{ jewelry.id }}" data-cart-add-url="{% url 'cart_add' %}" data-cart-remove-url="{% url 'cart_remove' %}" >{% if item_in_cart %}Видалити з кошика{% else %}Додати до кошика{% endif %}</button>
+        <button data-csrftoken="{{ csrf_token }}" class="item-details__btn {% if item_in_cart %}item-details__btn__remove{% else %}item-details__btn__add{% endif %}" data-id="{{ jewelry.id }}" data-cart-add-url="{% url 'cart_add' %}" data-cart-remove-url="{% url 'cart_remove' %}" >{% if item_in_cart %}Видалити з кошика{% else %}Додати до кошика{% endif %}</button>
         <div class="item-details__details">деталі</div>
         <div class="item-details__wrapper">
             <div>Тип прикраси: <span>{{ jewelry_type.name | lower }}</span></div>

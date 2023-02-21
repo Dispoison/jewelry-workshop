@@ -25,8 +25,8 @@
                         <div><span>{{ total_price|floatformat:0 }}</span> <span>грн.</span></div>
                     </div>
                     <div class="right-item__edit">Редагувати</div>
-                    <div class="right-item__save" data-url="{% url 'cart_edit' %}">Зберегти</div>
-                    <button type="submit" form="order-form" class="right-item__btn" data-url="{% url 'order_create' %}">Замовити</button>
+                    <div class="right-item__save" data-url="{% url 'cart_edit' %}" data-csrftoken="{{ csrf_token }}">Зберегти</div>
+                    <button type="submit" form="order-form" data-csrftoken="{{ csrf_token }}" class="right-item__btn" data-url="{% url 'order_create' %}">Замовити</button>
                 </div>
             </div>
         </div>
