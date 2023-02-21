@@ -94,6 +94,10 @@ let htmlRedDot = `<g>
     <text x="15" y="17" font-size="8" font-weight="bold" text-anchor="middle" fill="white"></text>
 </g>`
 
+let htmlEmptyCart = `<section class="goods">
+    <div class="container"><h2 class="goods__title">Кошик порожній...</h2></div>
+</section>`
+
 function generateOrderItem(itemName, itemPrice, itemQuantity){
   var div = document.createElement('div');
   div.innerHTML = htmlOrderItem.trim();
@@ -192,10 +196,10 @@ saveBtn && saveBtn.addEventListener('click', () => {
   });
 
   const url = document.querySelector('.right-item__save').getAttribute('data-url');
-  sendPostRequest(orderData, url);
+  sendPostRequestSave(orderData, url);
 });
 
-function sendPostRequest(data, url){
+function sendPostRequestSave(data, url){
   fetch(url, {
     method: 'POST',
     headers: {
@@ -206,13 +210,36 @@ function sendPostRequest(data, url){
   })
   .then(response => {
     if (response.ok) {
-      if (response.redirected) {
-          window.alert('Замовлення успішно створене');
-          window.location.replace(response.url)
-      }
       return response.json()
     }
-      window.alert('Помилка відправки запиту');
+      return Promise.reject(response);
+  })
+  .then(data => {
+    if ("cart_items_quantity" in data){
+      let cartItemsQuantity = data["cart_items_quantity"]
+      setCartIconItemsQuantity(cartItemsQuantity);
+      if (cartItemsQuantity <= 0){
+        let divMain = document.querySelector('div.main')
+        divMain.innerHTML = htmlEmptyCart;
+      }
+    }
+  })
+  .catch(error => console.error(error));
+}
+
+function sendPostRequestAdd(data, url){
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json()
+    }
       return Promise.reject(response);
   })
   .then(data => {
@@ -230,6 +257,34 @@ function sendPostRequest(data, url){
       addBtn.classList.remove('item-details__btn__remove')
       addBtn.classList.add('item-details__btn__add')
       addBtn.innerHTML = 'Додати до кошика'
+    }
+  })
+  .catch(error => console.error(error));
+}
+
+function sendPostRequestOrderSubmit(data, url){
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => {
+    if (response.ok) {
+      if (response.redirected) {
+          window.alert('Замовлення успішно створене');
+          window.location.replace(response.url)
+      }
+      return response.json()
+    }
+      return Promise.reject(response);
+  })
+  .then(data => {
+    if ("cart_items_quantity" in data){
+      let cartItemsQuantity = data["cart_items_quantity"]
+      setCartIconItemsQuantity(cartItemsQuantity);
     }
   })
   .catch(error => console.error(error));
@@ -254,7 +309,7 @@ addBtn && addBtn.addEventListener('click', () => {
   else if (addBtn.classList.contains('item-details__btn__remove')){
     requestUrl = cartItemRemoveUrl
   }
-  sendPostRequest(data, requestUrl)
+  sendPostRequestAdd(data, requestUrl)
 });
 
 
@@ -301,7 +356,7 @@ function orderButtonSubmitted() {
   data['client']['email'] = clientEmail.value
 
   let url = orderBtn.getAttribute('data-url')
-  sendPostRequest(data, url)
+  sendPostRequestOrderSubmit(data, url)
 }
 
 function scrollToCategories() {
