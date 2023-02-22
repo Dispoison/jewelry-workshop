@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ваше замовлення №{{ order.id }} прийняте</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: "Roboto", sans-serif;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #2C2C2C;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 5px auto;
+        }
+
+        .order-details {
+            background-color: #FFFFFF;
+            margin-top: 20px;
+            padding: 20px;
+            border: grey 1px solid;
+        }
+
+        .order-details h2 {
+            color: #2C2C2C;
+            margin-top: 0;
+        }
+
+        .order-details table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .order-details th, .order-details td {
+            border: 1px solid #CCCCCC;
+            padding: 10px;
+            text-align: left;
+        }
+
+        td.td-img {
+            text-align: center;
+        }
+
+        .order-img {
+            width: 75px;
+        }
+
+        .total-price {
+            text-align: right;
+        }
+
+        .order-details th {
+            background-color: #EEEEEE;
+        }
+
+        .final-information {
+            background-color: #FFFFFF;
+            margin-top: 20px;
+            padding: 20px;
+            border: grey 1px solid;
+        }
+
+        .final-information h2 {
+            color: #2C2C2C;
+            margin-top: 0;
+        }
+
+        .final-information p {
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background-color: #2C2C2C;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 5px auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Ваше замовлення №{{ order.id }} прийняте</h1>
+    </div>
+
+    <div class="order-details">
+        <h2>Деталі замовлення</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Зображення</th>
+                <th>Товар</th>
+                <th>Кількість</th>
+                <th>Ціна, грн.</th>
+                <th>Загальна ціна, грн.</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in order.orderitem_set.all %}
+            <tr>
+                <td class="td-img"><img class="order-img" src="{{ item.jewelry.photo.url }}" alt="{{ item.jewelry.name }}"></td>
+                <td>{{ item.jewelry.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.jewelry.price|floatformat:0 }}</td>
+                <td>{{ item.total_price|floatformat:0 }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h3 class="total-price">Усього: {{ order.price|floatformat:0 }} грн.</h3>
+    </div>
+
+    <div class="final-information">
+        <h2>Наступні кроки</h2>
+        <p>Ми зв'яжемося з вами найближчим часом</p>
+    </div>
+
+    <div class="footer">
+        <p>Дякуємо за ваше замовлення!</p>
+    </div>
+</div>
+</body>
+</html>

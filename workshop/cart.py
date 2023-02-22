@@ -70,5 +70,8 @@ class GuestCart:
         self.cart = self.session[CART_SESSION_KEY] = dict()
         self.save()
 
+    def is_not_empty(self):
+        return bool(self.cart)
+
     def save(self):
         self.session.modified = True

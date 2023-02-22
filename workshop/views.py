@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView
 
 from workshop.cart import GuestCart
+from workshop.email import send_order_mail_in_background
 from workshop.models import JewelryType, Jewelry, Client, Order, OrderItem
 from workshop.serializers import CartIdSerializer, CartUpdateSerializer, OrderInfoSerializer
 from workshop.utils.mixins.view_data_mixin import ViewDataMixin
@@ -122,7 +123,8 @@ def post_make_order(request):
     if request.method == "POST":
         body_data = json.loads(request.body.decode("utf-8"))
         serializer = OrderInfoSerializer(data=body_data)
-        if serializer.is_valid():
+        cart = GuestCart(request)
+        if cart.is_not_empty() and serializer.is_valid():
             validated_data = serializer.validated_data
             if len(validated_data["cart"]) == 0:
                 return HttpResponseBadRequest("You cannot make order without items", status=400)
@@ -136,8 +138,9 @@ def post_make_order(request):
                 for cart_item in validated_data["cart"]:
                     order_item = OrderItem(jewelry_id=cart_item["id"], order=order, quantity=cart_item["quantity"])
                     order_item.save()
-
-            cart = GuestCart(request)
             cart.remove_all()
+
+            send_order_mail_in_background(order.id)
+
             return redirect("home")
     return HttpResponse(status=400)
