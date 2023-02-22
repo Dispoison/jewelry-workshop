@@ -140,7 +140,7 @@ def post_make_order(request):
                     order_item.save()
             cart.remove_all()
 
-            send_order_mail_in_background(order.id)
+            send_order_mail_in_background(request, order.id)
 
             return redirect("home")
     return HttpResponse(status=400)

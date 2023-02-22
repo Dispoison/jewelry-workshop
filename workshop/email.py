@@ -7,7 +7,7 @@ from django.utils.html import strip_tags
 from workshop.models import Order
 
 
-def send_order_mail(order_id):
+def send_order_mail(request, order_id):
     order = (Order.objects
              .select_related("client")
              .prefetch_related("orderitem_set")
@@ -19,7 +19,7 @@ def send_order_mail(order_id):
         order_price += item.total_price
     order.price = order_price
 
-    html_message = render_to_string('workshop/email/email.html', {"order": order})
+    html_message = render_to_string('workshop/email/email.html', {"request": request, "order": order})
     plain_message = strip_tags(html_message)
 
     send_mail(
@@ -31,6 +31,6 @@ def send_order_mail(order_id):
     )
 
 
-def send_order_mail_in_background(order_id):
-    thread = Thread(target=send_order_mail, kwargs={"order_id": order_id})
+def send_order_mail_in_background(request, order_id):
+    thread = Thread(target=send_order_mail, kwargs={"request": request, "order_id": order_id})
     thread.start()

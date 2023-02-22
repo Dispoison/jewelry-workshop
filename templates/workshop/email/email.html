@@ -115,7 +115,7 @@
             <tbody>
             {% for item in order.orderitem_set.all %}
             <tr>
-                <td class="td-img"><img class="order-img" src="{{ item.jewelry.photo.url }}" alt="{{ item.jewelry.name }}"></td>
+                <td class="td-img"><img class="order-img" src="{{request.scheme}}://{{request.META.HTTP_HOST}}{{ item.jewelry.photo.url }}" alt="{{ item.jewelry.name }}"></td>
                 <td>{{ item.jewelry.name }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.jewelry.price|floatformat:0 }}</td>
