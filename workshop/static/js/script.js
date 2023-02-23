@@ -275,7 +275,7 @@ function sendPostRequestOrderSubmit(data, url, csrf){
   .then(response => {
     if (response.ok) {
       if (response.redirected) {
-          window.alert('Замовлення успішно створене');
+          window.alert('Замовлення успішно створене!\n\nПротягом декількох хвилин ми надішлемо вам електронний лист');
           window.location.replace(response.url)
       }
       return response.json()
